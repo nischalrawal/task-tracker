@@ -22,15 +22,31 @@ export function createTask(input: CreateTaskInput): Task {
     updatedAt: now,
   };
 
+
   tasks.push(task);
 
   return task;
 }
 
+// create many tasks
 export function crateManyTask(inputs: CreateTaskInput[]): Task[] {
   const userCreatedTask = inputs.map((input) => {
     return createTask(input);
   });
 
   return userCreatedTask;
+}
+
+//get all tasks
+export function getAllTasks(): Task[] {
+  return [...tasks];
+}
+
+// fetch task by id
+export function getTaskById(id: string): Task | null {
+  if (!id) {
+    throw new Error('Must provide a task id');
+  }
+  const task = tasks.find((task) => task.id === id);
+  return task ?? null;
 }

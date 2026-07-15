@@ -1,5 +1,7 @@
 import { createTask } from './tasks/tasks.service.js';
 import { crateManyTask } from './tasks/tasks.service.js';
+import { getAllTasks } from './tasks/tasks.service.js';
+import { getTaskById } from './tasks/tasks.service.js';
 
 const userTask = createTask({
   title: 'Learning Js',
@@ -7,7 +9,6 @@ const userTask = createTask({
   priority: 'HIGH',
 });
 
-console.log('Sucessfully created Task', userTask);
 
 const tasks = crateManyTask([
   {
@@ -22,4 +23,15 @@ const tasks = crateManyTask([
   },
 ]);
 
-console.log('Tasks created by user', tasks);
+
+// fetch all tasks
+const allTasks = getAllTasks();
+
+// fetch task by id
+
+const fetchTaskById = getTaskById(userTask.id);
+
+
+console.log('Sucessfully created Task', userTask);
+console.log(allTasks);
+console.log('Fetched Task Sucessfully by [getTaskById]', fetchTaskById);
