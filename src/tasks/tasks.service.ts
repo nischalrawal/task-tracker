@@ -9,7 +9,7 @@ export function createTask(input: CreateTaskInput): Task {
     throw new Error('Title missing');
   }
 
-  //date
+  //create date
   const now = new Date();
 
   const task: Task = {
@@ -51,6 +51,7 @@ export function getTaskById(id: string): Task | null {
 }
 
 export function updateTasks(id: string, input: UpdateTaskInput): Task | null {
+
   //check if the id exist of that task
   if (!id.trim()) {
     throw new Error('Must provide task id to update');
@@ -87,4 +88,29 @@ export function updateTasks(id: string, input: UpdateTaskInput): Task | null {
   task.updatedAt = new Date();
 
   return task;
+}
+
+//delete function
+
+export function deleteTask(id: string): Task | null{
+
+
+  if(!id.trim()){
+    throw new Error('Must provide id to delete task');
+  }
+
+  const taskIndex = tasks.findIndex((task)=> {
+    return task.id === id
+  });
+
+  if (taskIndex === -1){
+    return null;
+  }
+
+  const deletedTasks = tasks.splice(taskIndex, 1);
+  const deleteTask = deletedTasks[0];
+
+  return deleteTask;
+
+
 }

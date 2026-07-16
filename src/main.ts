@@ -1,38 +1,56 @@
-import { createTask, updateTasks } from './tasks/tasks.service.js';
+import { createTask, deleteTask, updateTasks } from './tasks/tasks.service.js';
 import { crateManyTask } from './tasks/tasks.service.js';
 import { getAllTasks } from './tasks/tasks.service.js';
 import { getTaskById } from './tasks/tasks.service.js';
 
-const userTask = createTask({
+const userCreatedTask = createTask({
   title: 'Learning Js',
   description: 'Started learning Js',
   priority: 'HIGH',
 });
+console.log('Sucessfully created Task', userCreatedTask);
 
-const tasks = crateManyTask([
-  {
-    title: 'Learning Js',
-    description: 'Started learning Js',
-    priority: 'HIGH',
-  },
-  {
-    title: 'Learning Js',
-    description: 'Started learning Js',
-    priority: 'HIGH',
-  },
-]);
+// create many tasks
+
+// const tasks = crateManyTask([
+//   {
+//     title: 'Learning Js',
+//     description: 'Started learning Js',
+//     priority: 'HIGH',
+//   },
+//   {
+//     title: 'Learning Js',
+//     description: 'Started learning Js',
+//     priority: 'HIGH',
+//   },
+// ]);
 
 // fetch all tasks
-const allTasks = getAllTasks();
+const fetchedAllTasks = getAllTasks();
+console.log('Fetched all task', fetchedAllTasks);
+
+
 
 // fetch task by id
+const fetchTaskById = getTaskById(userCreatedTask.id);
+console.log('Fetched Task Sucessfully by [getTaskById]', fetchTaskById);
 
-const fetchTaskById = getTaskById(userTask.id);
-
-const changedTask = updateTasks(userTask.id, {
+// update Task
+const userUpdatedTask = updateTasks(userCreatedTask.id, {
   title: 'id',
 });
 
-console.log('Sucessfully created Task', userTask);
-console.log(allTasks);
-console.log('Fetched Task Sucessfully by [getTaskById]', fetchTaskById);
+if(!userUpdatedTask){
+  console.log('task not found');
+} else
+console.log('Task Updated Sucessfully', userUpdatedTask);
+
+
+// delete task
+const userDeletedTask = deleteTask(userCreatedTask.id);
+console.log('Task deleted successfully', userDeletedTask);
+
+
+
+
+
