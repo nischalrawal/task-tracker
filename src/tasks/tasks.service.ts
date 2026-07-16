@@ -22,7 +22,6 @@ export function createTask(input: CreateTaskInput): Task {
     updatedAt: now,
   };
 
-
   tasks.push(task);
 
   return task;
@@ -49,4 +48,43 @@ export function getTaskById(id: string): Task | null {
   }
   const task = tasks.find((task) => task.id === id);
   return task ?? null;
+}
+
+export function updateTasks(id: string, input: UpdateTaskInput): Task | null {
+  //check if the id exist of that task
+  if (!id.trim()) {
+    throw new Error('Must provide task id to update');
+  }
+
+  if (Object.keys(input).length === 0) {
+    throw new Error('Must provide one field to update');
+  }
+
+  const task = tasks.find((task) => task.id === id);
+
+  if (!task) {
+    return null;
+  }
+
+  if (input.title !== undefined) {
+    const trimmedTitle = input.title.trim();
+
+    if (!trimmedTitle) {
+      throw new Error('Title cannot be empty');
+    }
+
+    task.title = trimmedTitle;
+  }
+
+  if (input.status !== undefined) {
+    task.status = input.status;
+  }
+
+  if (input.priority !== undefined) {
+    task.priority = input.priority;
+  }
+
+  task.updatedAt = new Date();
+
+  return task;
 }
