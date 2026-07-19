@@ -1,4 +1,4 @@
-import { Task } from './tasks.types.js';
+import { Task, TaskFilter } from './tasks.types.js';
 import { type CreateTaskInput } from './tasks.types.js';
 import { type UpdateTaskInput } from './tasks.types.js';
 import { generateId } from '../utils/id.js';
@@ -51,7 +51,6 @@ export function getTaskById(id: string): Task | null {
 }
 
 export function updateTasks(id: string, input: UpdateTaskInput): Task | null {
-
   //check if the id exist of that task
   if (!id.trim()) {
     throw new Error('Must provide task id to update');
@@ -92,18 +91,16 @@ export function updateTasks(id: string, input: UpdateTaskInput): Task | null {
 
 //delete function
 
-export function deleteTask(id: string): Task | null{
-
-
-  if(!id.trim()){
+export function deleteTask(id: string): Task | null {
+  if (!id.trim()) {
     throw new Error('Must provide id to delete task');
   }
 
-  const taskIndex = tasks.findIndex((task)=> {
-    return task.id === id
+  const taskIndex = tasks.findIndex((task) => {
+    return task.id === id;
   });
 
-  if (taskIndex === -1){
+  if (taskIndex === -1) {
     return null;
   }
 
@@ -111,6 +108,17 @@ export function deleteTask(id: string): Task | null{
   const deleteTask = deletedTasks[0];
 
   return deleteTask;
+}
 
+// filter task
 
+export function filterTasks(inputs: TaskFilter): Task[] {
+  // check if tasks exist
+  return tasks.filter((task) => {
+    const matchStatus = task.status === undefined || task.status === inputs.status;
+
+    const matchPriority = task.priority === undefined || task.priority === inputs.priority;
+
+    return matchStatus || matchPriority;
+  });
 }
