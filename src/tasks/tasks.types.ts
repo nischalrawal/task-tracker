@@ -24,3 +24,8 @@ export interface UpdateTaskInput {
   status?: TaskStatus;
   priority?: TaskPriority;
 }
+
+export interface TaskFilter {
+  status?: string;
+  priority?: string;
+}
